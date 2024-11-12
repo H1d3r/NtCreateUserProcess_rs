@@ -8,7 +8,7 @@ use winapi::shared::ntdef::HANDLE as winapi_HANDLE;
 
 fn main() {
     let teb = get_teb();
-    println!("teb: {:?}", teb);
+    //println!("teb: {:?}", teb);
 
     //need to add error handling
     let ntdll = get_dll_address("ntdll.dll".to_string(), teb).unwrap();
