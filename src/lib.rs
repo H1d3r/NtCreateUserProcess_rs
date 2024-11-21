@@ -28,7 +28,7 @@ pub struct ProcessHandles {
 }
 
 //create suspended process with NtCreateUserProcess
-pub extern "C" fn CreateSuspendedProcess(ntdll: *const std::ffi::c_void) -> ProcessHandles {
+pub extern "C" fn CreateSuspendedProcess(ntdll: *const std::ffi::c_void, process_path: &str) -> ProcessHandles {
     unsafe {
         //locate NtCreateUserProcess
         let function_address = get_function_address(ntdll, "NtCreateUserProcess").unwrap();
@@ -81,7 +81,7 @@ pub extern "C" fn CreateSuspendedProcess(ntdll: *const std::ffi::c_void) -> Proc
             RtlCreateProcessParametersEx
         );*/
 
-        let nt_image_path = r"\??\C:\Windows\System32\cmd.exe";
+        let nt_image_path = format!(r"\??\\{}", process_path);
         let mut nt_image_path: Vec<u16> = nt_image_path.encode_utf16().collect();
         nt_image_path.push(0);
 
@@ -167,7 +167,7 @@ pub extern "C" fn CreateSuspendedProcess(ntdll: *const std::ffi::c_void) -> Proc
     }
 }
 
-pub extern "C" fn CreateUserProcess(ntdll: *const std::ffi::c_void) -> ProcessHandles {
+pub extern "C" fn CreateUserProcess(ntdll: *const std::ffi::c_void, process_path: &str) -> ProcessHandles {
     unsafe {
         //locate NtCreateUserProcess
         let function_address = get_function_address(ntdll, "NtCreateUserProcess").unwrap();
@@ -215,7 +215,7 @@ pub extern "C" fn CreateUserProcess(ntdll: *const std::ffi::c_void) -> ProcessHa
             ) -> i32,
         >(function_address);
 
-        let nt_image_path = r"\??\C:\Windows\System32\cmd.exe";
+        let nt_image_path = format!(r"\??\\{}", process_path);
         let mut nt_image_path: Vec<u16> = nt_image_path.encode_utf16().collect();
         nt_image_path.push(0);
 
