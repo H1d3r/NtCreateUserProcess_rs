@@ -2,8 +2,8 @@
 
 use noldr::{get_dll_address, get_function_address, get_teb};
 use winapi::{shared::ntdef::NTSTATUS, um::processthreadsapi::GetProcessId};
-mod func;
-use crate::func::{CreateSuspendedProcess, CreateUserProcess};
+
+use NtCreateUserProcess_rs::{CreateSuspendedProcess, CreateUserProcess, ResumeThread};
 use winapi::shared::ntdef::HANDLE as winapi_HANDLE;
 
 fn main() {
@@ -41,7 +41,7 @@ fn main() {
     //resume the thread only if process was created suspended
     if is_suspended {
         println!("Resuming thread");
-        let resume_result = func::ResumeThread(thread_handle.0 as winapi_HANDLE, ntdll);
+        let resume_result = ResumeThread(thread_handle.0 as winapi_HANDLE, ntdll);
         println!("Resume result: {:x?}", resume_result);
     }
 

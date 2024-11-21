@@ -25,6 +25,26 @@ Both methods demonstrate proper initialization of the required structures and pa
 4. cmd.exe is used as the default executable. there is a breakpoint in the code so you can check the pid in task manager
 5. Press Enter to continue and observe the output
 
+##### Using as a library in your own project
+
+Add this to your `Cargo.toml`:
+
+```toml
+[dependencies]
+rpi = { git = "https://github.com/Teach2Breach/NtCreateUserProcess_rs.git" }
+```
+
+#### Usage
+example using from your own program:
+```rust
+use NtCreateUserProcess_rs::*;
+fn () main {
+//
+let handles = CreateSuspendedProcess(ntdll);
+//
+}
+```
+
 ##### Features
 
 - Creates processes using the native API instead of Win32 APIs
