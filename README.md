@@ -17,7 +17,7 @@ Both methods demonstrate proper initialization of the required structures and pa
 - Unicode string handling with `RtlInitUnicodeString`
 - Proper attribute list configuration
 
-##### Usage
+##### Testing
 
 1. Compile the project using `cargo build`
 2. Run the compiled executable
@@ -34,14 +34,34 @@ Add this to your `Cargo.toml`:
 NtCreateUserProcess_rs = { git = "https://github.com/Teach2Breach/NtCreateUserProcess_rs.git" }
 ```
 
-#### Usage
+##### Usage
 example using from your own program:
 ```rust
-use NtCreateUserProcess_rs::*;
-fn () main {
-//
-let handles = CreateSuspendedProcess(ntdll);
-//
+use NtCreateUserProcess_rs::CreateSuspendedProcess;
+use noldr::{get_dll_address, get_function_address, get_teb};
+
+fn main() {
+    let teb = get_teb();
+    //println!("teb: {:?}", teb);
+
+    //need to add error handling
+    let ntdll = get_dll_address("ntdll.dll".to_string(), teb).unwrap();
+
+    //set the process name to cmd.exe for testing
+    let process_name = "cmd.exe".to_string();
+
+    let process_path = if !process_name.contains('\\') {
+        format!("C:\\Windows\\System32\\{}", process_name)
+    } else {
+        process_name
+    };
+
+    // Create a suspended CMD process
+    let process_handles = CreateSuspendedProcess(ntdll, &process_path);
+    println!("process_handles: ProcessHandles {{ process_handle: HANDLE(0x{:x}), thread_handle: HANDLE(0x{:x}) }}", 
+        process_handles.process_handle.0,
+        process_handles.thread_handle.0
+    );
 }
 ```
 
