@@ -31,7 +31,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-rpi = { git = "https://github.com/Teach2Breach/NtCreateUserProcess_rs.git" }
+NtCreateUserProcess_rs = { git = "https://github.com/Teach2Breach/NtCreateUserProcess_rs.git" }
 ```
 
 #### Usage
