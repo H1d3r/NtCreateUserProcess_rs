@@ -44,7 +44,6 @@ fn main() {
     let teb = get_teb();
     //println!("teb: {:?}", teb);
 
-    //need to add error handling
     let ntdll = get_dll_address("ntdll.dll".to_string(), teb).unwrap();
 
     //set the process name to cmd.exe for testing
