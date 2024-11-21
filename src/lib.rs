@@ -20,6 +20,7 @@ struct PsAttributeList {
     attributes: [PS_ATTRIBUTE; 2],
 }
 
+#[derive(Debug)]
 #[repr(C)]
 pub struct ProcessHandles {
     pub process_handle: HANDLE,
