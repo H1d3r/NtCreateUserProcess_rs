@@ -48,7 +48,7 @@ pub extern "C" fn CreateSuspendedProcess(ntdll: *const std::ffi::c_void, process
                 AttributeList: *mut PsAttributeList,
             ) -> i32,
         >(function_address);
-        println!("NtCreateUserProcess: {:?}", NtCreateUserProcess);
+        //println!("NtCreateUserProcess: {:?}", NtCreateUserProcess);
 
         //locate RtlInitUnicodeString
         let function_address = get_function_address(ntdll, "RtlInitUnicodeString").unwrap();
@@ -187,7 +187,7 @@ pub extern "C" fn CreateUserProcess(ntdll: *const std::ffi::c_void, process_path
                 AttributeList: *mut PsAttributeList,
             ) -> i32,
         >(function_address);
-        println!("NtCreateUserProcess: {:?}", NtCreateUserProcess);
+        //println!("NtCreateUserProcess: {:?}", NtCreateUserProcess);
 
         //locate RtlInitUnicodeString
         let function_address = get_function_address(ntdll, "RtlInitUnicodeString").unwrap();
